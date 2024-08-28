@@ -1,35 +1,19 @@
 {
-  "name": "default-repository",
-  "version": "0.0.3",
+  "name": "inkly",
   "private": true,
   "type": "module",
-  "description": "default repository for HugoRCD",
-  "author": "HugoRCD",
-  "funding": "https://github.com/sponsors/HugoRCD",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HugoRCD/default-repository.git"
-  },
-  "bugs": {
-    "url": "https://github.com/HugoRCD/default-repository/issues"
-  },
   "scripts": {
-    "automd": "automd",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "release": "bun run lint && changelogen --release --push"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.0",
+    "vue": "latest"
   },
   "devDependencies": {
-    "@hrcd/eslint-config": "^2.0.2",
-    "automd": "^0.3.8",
-    "changelogen": "^0.5.5",
-    "eslint": "^9.9.1",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
-  },
-  "publishConfig": {
-    "access": "public"
+    "@mockline/utils": "^1.1.0"
   }
 }
