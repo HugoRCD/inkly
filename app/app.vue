@@ -25,7 +25,7 @@ const onFileChange = (e) => {
 
 const generateSignatureHTML = computed(() => {
   return `
-    <table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; color: #333333;">
+    <table style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; color: #333333;">
       <tr>
         <td style="vertical-align: top; padding-right: 15px;">
           ${imagePreview.value ? `<img src="${imagePreview.value}" alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">` : ''}
