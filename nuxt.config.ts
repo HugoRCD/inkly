@@ -2,8 +2,20 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@mockline/utils'],
+
   future: {
     compatibilityVersion: 4
-  }
+  },
+
+  icon: {
+    mode: 'svg',
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: './assets/icons',
+      },
+    ],
+  },
+
+  modules: ['@nuxt/ui']
 })
