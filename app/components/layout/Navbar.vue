@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useElementSize } from '@vueuse/core'
-
 const header = ref(null)
 const { height } = useElementSize(header)
 

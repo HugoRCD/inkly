@@ -10,10 +10,16 @@ export type SignatureFormData = {
 }
 
 export type SignatureOptions = {
-  fontSize: number
   gap: number
+  imageForm: 'circle' | 'square' | 'rectangle'
   imageSize: number
+  textSize: number
+  fontSize: number
+  titleSize: number
+  titleColor: string
+  textGap: number
   textColor: string
+  backgroundColor: string
   align: string
 }
 

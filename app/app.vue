@@ -11,8 +11,11 @@ useSeoMeta({
   description: 'The most simple open-source email signature generator',
   author: 'Hugo Richard',
   twitter: '@HugoRCD__',
+  twitterTitle: 'Inkly - Email Signature Generator',
+  twitterDescription: 'The most simple open-source email signature generator',
   twitterCard: 'summary_large_image',
   twitterImage: '/og.png',
+  ogUrl: 'https://inkly.hrcd.fr',
   ogImage: '/og.png',
   ogTitle: 'Inkly - Email Signature Generator',
   ogDescription: 'The most simple open-source email signature generator',
@@ -21,7 +24,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <Html class="h-full">
+  <Html class="h-full" lang="en">
     <Body class="h-screen">
       <NuxtLayout>
         <NuxtPage />

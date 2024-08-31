@@ -60,9 +60,9 @@ To start contributing, you can follow these steps:
 5. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 6. If your changes affect the code, run tests using `bun run test`.
 7. Create a pull request following the [Pull Request Template](https://github.com/HugoRCD/markdown/blob/main/src/pull_request_template.md).
-  - To be merged, the pull request must pass the tests/workflow and have at least one approval.
-  - If your changes affect the documentation, make sure to update it.
-  - If your changes affect the code, make sure to update the tests.
+   - To be merged, the pull request must pass the tests/workflow and have at least one approval.
+   - If your changes affect the documentation, make sure to update it.
+   - If your changes affect the code, make sure to update the tests.
 8. Wait for the maintainers to review your pull request.
 9. Once approved, the pull request will be merged in the next release !
 
@@ -86,11 +86,11 @@ To start contributing, you can follow these steps:
 
 <!-- automd:contributors license=Apache author=HugoRCD github="hugorcd/inkly" -->
 
-Published under the [APACHE](https://github.com/HugoRCD/hr-folio/blob/main/LICENSE) license.
-Made by [@HugoRCD](https://github.com/HugoRCD) and [community](https://github.com/HugoRCD/hr-folio/graphs/contributors) 💛
+Published under the [APACHE](https://github.com/hugorcd/inkly/blob/main/LICENSE) license.
+Made by [@HugoRCD](https://github.com/HugoRCD) and [community](https://github.com/hugorcd/inkly/graphs/contributors) 💛
 <br><br>
-<a href="https://github.com/HugoRCD/hr-folio/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=HugoRCD/inkly" />
+<a href="https://github.com/hugorcd/inkly/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=hugorcd/inkly" />
 </a>
 
 <!-- /automd -->
@@ -99,6 +99,6 @@ Made by [@HugoRCD](https://github.com/HugoRCD) and [community](https://github.co
 
 ---
 
-_🤖 auto updated with [automd](https://automd.unjs.io) (last updated: Tue Jun 18 2024)_
+_🤖 auto updated with [automd](https://automd.unjs.io) (last updated: Sat Aug 31 2024)_
 
 <!-- /automd -->

@@ -29,6 +29,8 @@
     "@hrcd/eslint-config": "^2.0.2",
     "@nuxt/scripts": "^0.7.1",
     "@nuxt/ui": "^2.18.4",
+    "@vueuse/core": "^11.0.3",
+    "@vueuse/nuxt": "^11.0.3",
     "automd": "^0.3.8",
     "changelogen": "^0.5.5",
     "eslint": "^9.9.1",
