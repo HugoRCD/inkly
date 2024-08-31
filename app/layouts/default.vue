@@ -5,7 +5,9 @@
 <template>
   <div>
     <LayoutNavbar />
-    <slot />
+    <div style="height: calc(100vh - var(--header-height))">
+      <slot />
+    </div>
   </div>
 </template>
 

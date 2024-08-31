@@ -33,8 +33,8 @@ const theme = ref('light')
 </script>
 
 <template>
-  <div class="flex justify-center bg-black text-white">
-    <div class="relative mx-auto flex-1 bg-gray-900 p-5 shadow-lg sm:max-w-xl">
+  <div class="flex h-full flex-col justify-center bg-black text-white">
+    <div class="relative flex-1 bg-gray-900 p-5 shadow-lg">
       <div class="space-y-6">
         <div v-for="field in fields" :key="field.name">
           <label :for="field.name" class="mb-2 block text-sm font-medium">{{ field.label }}</label>
@@ -44,9 +44,9 @@ const theme = ref('light')
       </div>
     </div>
     <div class="relative flex flex-1 flex-col items-center justify-center" :class="theme === 'light' ? 'text-white bg-black' : 'text-black bg-white'">
-      <div class="absolute right-2 top-2 z-10 flex cursor-pointer items-center gap-2">
-        <UIcon v-if="theme === 'dark'" name="lucide:sun" @click="theme = 'light'" />
-        <UIcon v-else name="lucide:moon" @click="theme = 'dark'" />
+      <div class="absolute right-2 top-2 z-10 flex cursor-pointer select-none items-center gap-2">
+        <UIcon v-if="theme === 'dark'" name="lucide:sun" class="size-6" @click="theme = 'light'" />
+        <UIcon v-else name="lucide:moon" class="size-6" @click="theme = 'dark'" />
       </div>
       <SignaturePreview
         :data

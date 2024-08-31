@@ -30,3 +30,9 @@ useSeoMeta({
     </Body>
   </Html>
 </template>
+
+<style>
+.font-instrument {
+  font-family: 'Instrument', serif;
+}
+</style>
