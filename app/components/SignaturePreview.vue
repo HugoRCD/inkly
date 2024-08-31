@@ -22,7 +22,7 @@ const generateSignatureHTML = computed(() => {
           ${data.image ? `<img src="${data.image}" alt="Profile Picture" style="width: ${options.imageSize}px; height: ${options.imageSize}px; border-radius: 50%; object-fit: cover;">` : ''}
         </td>
         <td style="vertical-align: top;">
-          <strong style="font-size: ${options.fontSize + 2}px;">${data.fullName}</strong><br>
+          <strong style="font-size: ${options.fontSize + 2}px; color: ${options.titleColor};">${data.fullName}</strong><br>
           ${data.jobTitle}<br>
           ${data.company}<br>
           ${data.email}<br>
@@ -54,7 +54,7 @@ const copySignature = async () => {
       <div class="flex" :style="{ gap: `${options.gap}px`, alignItems: options.align }">
         <img :src="data.image" alt="Profile Picture" :style="{ width: `${options.imageSize}px`, height: `${options.imageSize}px` }" class="rounded-full object-cover">
         <div :style="{ fontSize: `${options.fontSize}px` }">
-          <p class="font-bold">
+          <p class="font-bold" :style="{ color: options.titleColor }">
             {{ data.fullName }}
           </p>
           <p>{{ data.jobTitle }}</p>

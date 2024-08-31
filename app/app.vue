@@ -1,6 +1,25 @@
 <script setup lang="ts">
 import type { Alignment, SignatureFormData, SignatureOptions } from '~~/types'
 
+useScriptPlausibleAnalytics({
+  domain: 'inkly.hrcd.fr',
+  scriptInput: {
+    src: 'https://analytics.hrcd.fr/js/script.js',
+  }
+})
+
+useSeoMeta({
+  title: 'Inkly - Email Signature Generator',
+  description: 'The most simple open-source email signature generator',
+  author: 'Hugo Richard',
+  twitter: '@HugoRCD__',
+  twitterCard: 'summary_large_image',
+  twitterImage: '/og.png',
+  ogImage: '/og.png',
+  ogTitle: 'Inkly - Email Signature Generator',
+  ogDescription: 'The most simple open-source email signature generator',
+})
+
 const fields = [
   { name: 'image', label: 'Profile Picture', type: 'text' },
   { name: 'fullName', label: 'Full Name', type: 'text' },
@@ -23,14 +42,13 @@ const options = ref<SignatureOptions>({
   fontSize: 14,
   gap: 10,
   imageSize: 80,
-  textColor: '#000000',
+  titleColor: '#000000',
+  textColor: '#111111',
   backgroundColor: '#ffffff',
   align: 'center',
 })
 
-function setAlign(newAlign: Alignment) {
-  options.value.align = newAlign
-}
+const theme = ref('light')
 </script>
 
 <template>
@@ -44,68 +62,14 @@ function setAlign(newAlign: Alignment) {
               <label :for="field.name" class="mb-2 block text-sm font-medium">{{ field.label }}</label>
               <UInput :id="field.name" v-model="data[field.name]" :type="field.type" />
             </div>
-
-            <div>
-              <label class="mb-2 block text-sm font-medium">Customization</label>
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label for="fontSize" class="mb-1 block text-xs">Font Size</label>
-                  <URange
-                    id="fontSize"
-                    v-model="options.fontSize"
-                    type="range"
-                    :min="12"
-                    :max="24"
-                  />
-                </div>
-                <div>
-                  <label for="gap" class="mb-1 block text-xs">Gap</label>
-                  <URange
-                    id="gap"
-                    v-model="options.gap"
-                    type="range"
-                    :min="0"
-                    :max="20"
-                    class="w-full"
-                  />
-                </div>
-                <div>
-                  <label for="imageSize" class="mb-1 block text-xs">Image Size</label>
-                  <URange
-                    id="imageSize"
-                    v-model="options.imageSize"
-                    type="range"
-                    :min="40"
-                    :max="120"
-                    class="w-full"
-                  />
-                </div>
-                <div>
-                  <label for="textColor" class="mb-1 block text-xs">Text Color</label>
-                  <UInput id="textColor" v-model="options.textColor" type="color" />
-                </div>
-                <div class="flex flex-col">
-                  <label for="backgroundColor" class="mb-1 block text-xs">Background Color</label>
-                  <UInput id="backgroundColor" v-model="options.backgroundColor" type="color" />
-                </div>
-                <div>
-                  <label for="align" class="mb-1 block text-xs">Alignment</label>
-                  <UButtonGroup label="Alignment" class="w-full" orientation="horizontal">
-                    <UButton
-                      v-for="alignment in ['top', 'center', 'bottom']"
-                      :key="alignment"
-                      :color="alignment === options.align ? 'primary' : 'gray'"
-                      @click="setAlign(alignment)"
-                    >
-                      {{ alignment }}
-                    </UButton>
-                  </UButtonGroup>
-                </div>
-              </div>
-            </div>
+            <SettingsOption v-model="options" />
           </div>
         </div>
-        <div class="flex flex-1 flex-col items-center justify-center">
+        <div class="relative flex flex-1 flex-col items-center justify-center" :class="theme === 'light' ? 'text-white bg-black' : 'text-black bg-white'">
+          <div class="absolute right-2 top-2 z-10 flex cursor-pointer items-center gap-2">
+            <UIcon v-if="theme === 'dark'" name="lucide:sun" @click="theme = 'light'" />
+            <UIcon v-else name="lucide:moon" @click="theme = 'dark'" />
+          </div>
           <SignaturePreview
             :data
             :options
