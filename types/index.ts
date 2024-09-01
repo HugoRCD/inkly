@@ -2,6 +2,14 @@ export type Alignment = 'top' | 'center' | 'bottom'
 
 export type Form = 'circle' | 'square' | 'rectangle'
 
+export type SocialMedia = 'twitter' | 'instagram' | 'github' | 'linkedin'
+
+export type Social = {
+  title: string
+  url: string
+  type: SocialMedia
+}
+
 export type SignatureFormData = {
   image: string
   fullName: string
@@ -9,6 +17,7 @@ export type SignatureFormData = {
   company: string
   email: string
   phone: string
+  socials: Social[]
 }
 
 export type SignatureOptions = {
@@ -24,8 +33,11 @@ export type SignatureOptions = {
   }
   color: {
     title: string
+    autoTitle: boolean
     subtitle: string
+    social: string
     background: string
+    transparent: boolean
   }
   image: {
     align: Alignment

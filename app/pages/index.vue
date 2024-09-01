@@ -14,8 +14,11 @@ const options = ref<SignatureOptions>({
   },
   color: {
     title: '#000000',
+    autoTitle: true,
     subtitle: '#848484',
+    social: '#848484',
     background: '#ffffff',
+    transparent: true,
   },
   image: {
     align: 'center',
@@ -28,9 +31,31 @@ const data = ref<SignatureFormData>({
   image: 'https://avatars.githubusercontent.com/u/71938701?v=4',
   fullName: 'Hugo Richard',
   jobTitle: 'Développeur Web / Directeur Artistique',
-  company: 'Apple',
-  email: 'hrichard206@gmail.com',
+  company: '',
+  email: '',
   phone: '0621562218',
+  socials: [
+    {
+      title: 'Portfolio',
+      url: 'https://hrcd.fr',
+      type: 'portfolio',
+    },
+    {
+      title: 'Twitter',
+      url: 'https://dub.sh/oQ44pBH',
+      type: 'twitter',
+    },
+    {
+      title: 'Instagram',
+      url: 'https://www.instagram.com/hugo.rcd_/',
+      type: 'instagram',
+    },
+    {
+      title: 'GitHub',
+      url: 'https://git.new/hugorcd',
+      type: 'github',
+    },
+  ],
 })
 
 const theme = ref('light')

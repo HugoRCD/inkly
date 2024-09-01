@@ -36,6 +36,7 @@ const items = [
     icon: 'lucide:ruler',
     slot: 'size',
   },
+  { label: 'Color', icon: 'lucide:palette', slot: 'color' },
   {
     label: 'Gap',
     icon: 'lucide:grid',
@@ -124,6 +125,38 @@ const items = [
               :min="12"
               :max="24"
             />
+          </UFormGroup>
+        </div>
+      </template>
+      <template #color>
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+          <div class="flex flex-col gap-2">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+              Title Color
+            </span>
+            <div class="flex w-full items-center gap-4">
+              <UInput v-model="options.color.title" type="color" class="w-full" />
+              <UTooltip text="Auto-color">
+                <UCheckbox v-model="options.color.autoTitle" />
+              </UTooltip>
+            </div>
+          </div>
+          <UFormGroup label="Subtitle Color">
+            <UInput v-model="options.color.subtitle" type="color" />
+          </UFormGroup>
+          <div class="flex flex-col gap-2">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+              Background Color
+            </span>
+            <div class="flex w-full items-center gap-4">
+              <UInput v-model="options.color.background" type="color" class="w-full" />
+              <UTooltip text="Transparent">
+                <UCheckbox v-model="options.color.transparent" />
+              </UTooltip>
+            </div>
+          </div>
+          <UFormGroup label="Social Color">
+            <UInput v-model="options.color.social" type="color" />
           </UFormGroup>
         </div>
       </template>

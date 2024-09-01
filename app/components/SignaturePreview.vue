@@ -37,10 +37,10 @@ function copyToClipboard() {
   <div class="flex w-full flex-col items-center justify-center space-y-4 px-4">
     <div ref="signatureContainer" class="w-full rounded-md p-4">
       <ClientOnly>
-        <table>
+        <table :style="options.color.transparent ? {} : { backgroundColor: `${options.color.background}` }" style="width: 100%;">
           <tbody>
             <tr>
-              <td style="padding: 6px;">
+              <td style="padding: 6px;" :style="{ width: `${options.image.size + 12}px` }">
                 <img
                   :src="data.image"
                   alt="Profile Picture"
@@ -52,39 +52,49 @@ function copyToClipboard() {
                   ]"
                 >
               </td>
-              <td style="padding: 6px; font-family: 'Inter', sans-serif;" :style="{ fontSize: `${options.size.subtitle}px`, color: `${options.color.subtitle}` }">
+              <td style="padding: 6px; font-family: 'Inter', sans-serif;" :style="{ fontSize: `${options.size.subtitle}px` }">
                 <table :style="{ fontSize: `${options.size.subtitle}px` }">
-                  <tr>
-                    <td :style="{ fontWeight: '600', fontSize: `${options.size.title}px`, color: `${options.color.title}` }">
+                  <tr v-if="data.fullName">
+                    <td :style="{ fontWeight: '600', fontSize: `${options.size.title}px`, color: options.color.autoTitle ? '' : options.color.title }">
                       {{ data.fullName }}
                     </td>
                   </tr>
-                  <tr>
+                  <tr v-if="data.jobTitle" :style=" { color: `${options.color.subtitle}`}">
                     <td>
                       {{ data.jobTitle }}
                     </td>
                   </tr>
-                  <tr>
+                  <tr v-if="data.company" :style=" { color: `${options.color.subtitle}`}">
+                    <td :style="{ fontSize: `${options.size.subtitle}px`, color: `${options.color.subtitle}` }">
+                      {{ data.company }}
+                    </td>
+                  </tr>
+                  <tr v-if="data.email" :style=" { color: `${options.color.subtitle}`}">
+                    <td :style="{ fontSize: `${options.size.subtitle}px`, color: `${options.color.subtitle}` }">
+                      {{ data.email }}
+                    </td>
+                  </tr>
+                  <tr v-if="data.phone" :style=" { color: `${options.color.subtitle}`}">
                     <td>
                       {{ data.phone }}
                     </td>
                   </tr>
-                  <tr>
+                  <tr v-if="data.socials.length > 0">
                     <td>
-                      <table style="padding-top: 6px;">
+                      <table>
                         <tbody>
                           <tr :style="{ fontSize: `${options.size.social}px` }">
                             <td style="padding-right: 10px;">
-                              <a href="https://hrcd.fr">Portfolio</a>
+                              <a href="https://hrcd.fr" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">Portfolio</a>
                             </td>
                             <td style="padding-right: 10px;">
-                              <a href="https://dub.sh/oQ44pBH">Twitter</a>
+                              <a href="https://dub.sh/oQ44pBH" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">Twitter</a>
                             </td>
                             <td style="padding-right: 10px;">
-                              <a href="https://www.instagram.com/hugo.rcd_/">Instagram</a>
+                              <a href="https://www.instagram.com/hugo.rcd_/" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">Instagram</a>
                             </td>
                             <td style="padding-right: 10px;">
-                              <a href="https://git.new/hugorcd">GitHub</a>
+                              <a href="https://git.new/hugorcd" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">GitHub</a>
                             </td>
                           </tr>
                         </tbody>
