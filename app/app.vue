@@ -14,13 +14,13 @@ useSeoMeta({
   twitterTitle: 'Inkly - Email Signature Generator',
   twitterDescription: 'The most simple open-source email signature generator',
   twitterCard: 'summary_large_image',
-  twitterImage: '/og.png',
+  twitterImage: 'https://inkly.hrcd.fr/og.png',
   ogUrl: 'https://inkly.hrcd.fr',
-  ogImage: '/og.png',
+  ogImage: 'https://inkly.hrcd.fr/og.png',
+  ogSiteName: 'Inkly - Email Signature Generator',
   ogTitle: 'Inkly - Email Signature Generator',
   ogDescription: 'The most simple open-source email signature generator',
 })
-
 </script>
 
 <template>
@@ -35,6 +35,10 @@ useSeoMeta({
 </template>
 
 <style>
+#__nuxt, #__layout {
+  height: 100%;
+}
+
 .font-instrument {
   font-family: 'Instrument', serif;
 }

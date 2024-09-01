@@ -36,61 +36,70 @@ function copyToClipboard() {
 <template>
   <div class="flex w-full flex-col items-center justify-center space-y-4 px-4">
     <div ref="signatureContainer" class="w-full rounded-md p-4">
-      <table>
-        <tr>
-          <td style="padding: 6px;">
-            <img
-              :src="data.image"
-              alt="Profile Picture"
-              :style="[
-                options.imageForm === 'rectangle' ? { width: `${options.imageSize}px` } : {},
-                options.imageForm === 'square' ? { width: `${options.imageSize}px`, height: `${options.imageSize}px` } : {},
-                options.imageForm === 'circle' ? { width: `${options.imageSize}px`, height: `${options.imageSize}px`, borderRadius: `${options.imageSize}px` } : {},
-                { objectFit: 'cover' },
-              ]"
-            >
-          </td>
-          <td style="padding: 6px; font-family: 'Inter', sans-serif;">
-            <table>
-              <tr>
-                <td style="font-weight: 600; font-size: 16px;">
-                  {{ data.fullName }}
-                </td>
-              </tr>
-              <tr>
-                <td style="font-size: 13px; color: #848484;">
-                  {{ data.jobTitle }}
-                </td>
-              </tr>
-              <tr>
-                <td style="font-size: 13px; color: #848484;">
-                  {{ data.phone }}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <table style="padding-top: 6px;">
-                    <tr>
-                      <td style="padding-right: 10px;">
-                        <a href="https://hrcd.fr" style="font-size: 13px; color: #848484;">Portfolio</a>
-                      </td>
-                      <td style="padding-right: 10px;">
-                        <a href="https://dub.sh/oQ44pBH" style="font-size: 13px; color: #848484;">Twitter</a>
-                      </td>
-                      <td style="padding-right: 10px;">
-                        <a href="https://www.instagram.com/hugo.rcd_/" style="font-size: 13px; color: #848484;">Instagram</a>
-                      </td>
-                      <td style="padding-right: 10px;">
-                        <a href="https://git.new/hugorcd" style="font-size: 13px; color: #848484;">GitHub</a>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+      <ClientOnly>
+        <table>
+          <tbody>
+            <tr>
+              <td style="padding: 6px;">
+                <img
+                  :src="data.image"
+                  alt="Profile Picture"
+                  :style="[
+                    options.image.form === 'rectangle' ? { width: `${options.image.size}px` } : {},
+                    options.image.form === 'square' ? { width: `${options.image.size}px`, height: `${options.image.size}px` } : {},
+                    options.image.form === 'circle' ? { width: `${options.image.size}px`, height: `${options.image.size}px`, borderRadius: `${options.image.size}px` } : {},
+                    { objectFit: 'cover' },
+                  ]"
+                >
+              </td>
+              <td style="padding: 6px; font-family: 'Inter', sans-serif;" :style="{ fontSize: `${options.size.subtitle}px`, color: `${options.color.subtitle}` }">
+                <table :style="{ fontSize: `${options.size.subtitle}px` }">
+                  <tr>
+                    <td :style="{ fontWeight: '600', fontSize: `${options.size.title}px`, color: `${options.color.title}` }">
+                      {{ data.fullName }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      {{ data.jobTitle }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      {{ data.phone }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table style="padding-top: 6px;">
+                        <tbody>
+                          <tr :style="{ fontSize: `${options.size.social}px` }">
+                            <td style="padding-right: 10px;">
+                              <a href="https://hrcd.fr">Portfolio</a>
+                            </td>
+                            <td style="padding-right: 10px;">
+                              <a href="https://dub.sh/oQ44pBH">Twitter</a>
+                            </td>
+                            <td style="padding-right: 10px;">
+                              <a href="https://www.instagram.com/hugo.rcd_/">Instagram</a>
+                            </td>
+                            <td style="padding-right: 10px;">
+                              <a href="https://git.new/hugorcd">GitHub</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <template #fallback>
+          <div class="h-28" />
+        </template>
+      </ClientOnly>
     </div>
     <UButton :label="!copied ? copyButtonText : 'Copied!'" color="primary" :disabled="copied" @click="copyToClipboard()" />
   </div>

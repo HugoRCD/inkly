@@ -3,7 +3,7 @@ name: Check if packages can be built
 on:
   pull_request:
     branches:
-      - '**'
+      - '*'
 
 permissions:
   contents: read

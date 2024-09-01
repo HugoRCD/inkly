@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <div>
+  <div class="flex h-full flex-col">
     <LayoutNavbar />
-    <div style="height: calc(100vh - var(--header-height))">
+    <div class="h-full">
       <slot />
     </div>
   </div>

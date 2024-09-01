@@ -1,5 +1,7 @@
 export type Alignment = 'top' | 'center' | 'bottom'
 
+export type Form = 'circle' | 'square' | 'rectangle'
+
 export type SignatureFormData = {
   image: string
   fullName: string
@@ -10,17 +12,26 @@ export type SignatureFormData = {
 }
 
 export type SignatureOptions = {
-  gap: number
-  imageForm: 'circle' | 'square' | 'rectangle'
-  imageSize: number
-  textSize: number
-  fontSize: number
-  titleSize: number
-  titleColor: string
-  textGap: number
-  textColor: string
-  backgroundColor: string
-  align: string
+  gap: {
+    title: number
+    subtitle: number
+    social: number
+  }
+  size: {
+    title: number
+    subtitle: number
+    social: number
+  }
+  color: {
+    title: string
+    subtitle: string
+    background: string
+  }
+  image: {
+    align: Alignment
+    form: Form
+    size: number
+  }
 }
 
 export type Signature = {

@@ -1,86 +1,71 @@
 <script setup lang="ts">
-import type { Alignment, SignatureOptions } from '~~/types'
+import type { Alignment, SignatureFormData, SignatureOptions } from '~~/types'
 
-const options = defineModel<SignatureOptions>({})
+const options = defineModel<SignatureOptions>('options')
+const data = defineModel<SignatureFormData>('data')
 
 function setAlign(newAlign: Alignment) {
-  options.value.align = newAlign
+  options.value.image.align = newAlign
 }
 
 function setImageForm(newImageForm: ImageForm) {
-  options.value.imageForm = newImageForm
+  options.value.image.form = newImageForm
 }
+
+const fields = [
+  { name: 'fullName', label: 'Full Name', type: 'text' },
+  { name: 'jobTitle', label: 'Job Title', type: 'text' },
+  { name: 'company', label: 'Company', type: 'text' },
+  { name: 'email', label: 'Email', type: 'email' },
+  { name: 'phone', label: 'Phone', type: 'tel' },
+]
+
+const items = [
+  {
+    label: 'Personal Information',
+    icon: 'lucide:user',
+    slot: 'information',
+  },
+  {
+    label: 'Image',
+    icon: 'lucide:image',
+    slot: 'image',
+  },
+  {
+    label: 'Size',
+    icon: 'lucide:ruler',
+    slot: 'size',
+  },
+  {
+    label: 'Gap',
+    icon: 'lucide:grid',
+    slot: 'gap',
+  },
+]
 </script>
 
 <template>
   <div>
-    <h2 class="mb-2 block text-sm font-medium">
-      Customization
-    </h2>
-    <div class="flex flex-col gap-4">
-      <div>
-        <h2 class="mb-2 block text-sm font-medium">
-          Font Size
-        </h2>
-        <div class="grid grid-cols-2 gap-4">
-          <UFormGroup label="Title Size">
-            <URange
-              id="titleSize"
-              v-model="options.titleSize"
-              type="range"
-              :min="12"
-              :max="24"
-            />
-          </UFormGroup>
-          <UFormGroup label="Text Size">
-            <URange
-              id="textSize"
-              v-model="options.textSize"
-              type="range"
-              :min="12"
-              :max="24"
-            />
-          </UFormGroup>
+    <UTabs :items>
+      <template #information>
+        <div class="grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+          <div v-for="field in fields" :key="field.name">
+            <label :for="field.name" class="mb-2 block text-sm font-medium">{{ field.label }}</label>
+            <UInput :id="field.name" v-model="data[field.name]" :type="field.type" />
+          </div>
         </div>
-      </div>
-      <div>
-        <h2 class="mb-2 block text-sm font-medium">
-          Gap
-        </h2>
-        <div class="grid grid-cols-2 gap-4">
-          <UFormGroup label="Text Gap">
-            <URange
-              id="textGap"
-              v-model="options.textGap"
-              type="range"
-              :min="0"
-              :max="20"
-              class="w-full"
-            />
+      </template>
+      <template #image>
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+          <UFormGroup label="Image URL">
+            <UInput id="image" v-model="data.image" type="text" />
           </UFormGroup>
-          <UFormGroup label="Gap">
-            <URange
-              id="gap"
-              v-model="options.gap"
-              type="range"
-              :min="0"
-              :max="20"
-              class="w-full"
-            />
-          </UFormGroup>
-        </div>
-      </div>
-      <div>
-        <h2 class="mb-2 block text-sm font-medium">
-          Image
-        </h2>
-        <div class="grid grid-cols-2 gap-4">
           <UFormGroup label="Image Form">
             <UButtonGroup label="Image Form" class="w-full" orientation="horizontal">
               <UButton
                 v-for="form in ['circle', 'square', 'rectangle']"
                 :key="form"
-                :color="form === options.imageForm ? 'primary' : 'gray'"
+                :color="form === options.image.form ? 'primary' : 'gray'"
                 @click="setImageForm(form)"
               >
                 {{ form }}
@@ -90,42 +75,19 @@ function setImageForm(newImageForm: ImageForm) {
           <UFormGroup label="Image Size">
             <URange
               id="imageSize"
-              v-model="options.imageSize"
+              v-model="options.image.size"
               type="range"
               :min="40"
               :max="120"
               class="w-full"
             />
           </UFormGroup>
-        </div>
-      </div>
-      <div>
-        <h2 class="mb-2 block text-sm font-medium">
-          Colors
-        </h2>
-        <div class="grid grid-cols-2 gap-4">
-          <UFormGroup label="Title Color">
-            <UInput id="titleColor" v-model="options.titleColor" type="color" />
-          </UFormGroup>
-          <UFormGroup label="Text Color">
-            <UInput id="textColor" v-model="options.textColor" type="color" />
-          </UFormGroup>
-          <UFormGroup label="Background Color">
-            <UInput id="backgroundColor" v-model="options.backgroundColor" type="color" />
-          </UFormGroup>
-        </div>
-      </div>
-      <div>
-        <h2 class="mb-2 block text-sm font-medium">
-          Alignment
-        </h2>
-        <div class="grid grid-cols-2 gap-4">
-          <UFormGroup label="Alignment">
-            <UButtonGroup label="Alignment" class="w-full" orientation="horizontal">
+          <UFormGroup label="Image Alignment">
+            <UButtonGroup label="Image Alignment" class="w-full" orientation="horizontal">
               <UButton
                 v-for="alignment in ['top', 'center', 'bottom']"
                 :key="alignment"
-                :color="alignment === options.align ? 'primary' : 'gray'"
+                :color="alignment === options.image.align ? 'primary' : 'gray'"
                 @click="setAlign(alignment)"
               >
                 {{ alignment }}
@@ -133,11 +95,52 @@ function setImageForm(newImageForm: ImageForm) {
             </UButtonGroup>
           </UFormGroup>
         </div>
-      </div>
-    </div>
+      </template>
+      <template #size>
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+          <UFormGroup label="Title Size">
+            <URange
+              id="titleSize"
+              v-model="options.size.title"
+              type="range"
+              :min="12"
+              :max="24"
+            />
+          </UFormGroup>
+          <UFormGroup label="Subtitle Size">
+            <URange
+              id="textSize"
+              v-model="options.size.subtitle"
+              type="range"
+              :min="12"
+              :max="24"
+            />
+          </UFormGroup>
+          <UFormGroup label="Social Size">
+            <URange
+              id="socialSize"
+              v-model="options.size.social"
+              type="range"
+              :min="12"
+              :max="24"
+            />
+          </UFormGroup>
+        </div>
+      </template>
+      <template #gap>
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+          <UFormGroup label="Image Gap">
+            <URange
+              id="gap"
+              v-model="options.gap.image"
+              type="range"
+              :min="0"
+              :max="20"
+              class="w-full"
+            />
+          </UFormGroup>
+        </div>
+      </template>
+    </UTabs>
   </div>
 </template>
-
-<style scoped>
-
-</style>
