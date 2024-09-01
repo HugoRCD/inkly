@@ -177,8 +177,8 @@ const items = [
               id="gap"
               v-model="options.gap.image"
               type="range"
-              :min="0"
-              :max="20"
+              :min="12"
+              :max="30"
               class="w-full"
             />
           </UFormGroup>

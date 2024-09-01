@@ -25,6 +25,7 @@ export type SignatureOptions = {
     title: number
     subtitle: number
     social: number
+    image: number
   }
   size: {
     title: number

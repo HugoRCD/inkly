@@ -40,7 +40,7 @@ function copyToClipboard() {
         <table :style="options.color.transparent ? {} : { backgroundColor: `${options.color.background}` }" style="width: 100%;">
           <tbody>
             <tr>
-              <td style="padding: 6px;" :style="{ width: `${options.image.size + 12}px` }">
+              <td style="padding: 6px;" :style="{ width: `${options.image.size + options.gap.image}px` }">
                 <img
                   :src="data.image"
                   alt="Profile Picture"

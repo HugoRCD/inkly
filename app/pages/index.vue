@@ -6,6 +6,7 @@ const options = ref<SignatureOptions>({
     title: 10,
     subtitle: 10,
     social: 10,
+    image: 10,
   },
   size: {
     title: 16,
