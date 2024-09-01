@@ -26,6 +26,7 @@ const items = [
     icon: 'lucide:user',
     slot: 'information',
   },
+  { label: 'Socials', icon: 'lucide:share-2', slot: 'socials' },
   {
     label: 'Image',
     icon: 'lucide:image',
@@ -53,6 +54,15 @@ const items = [
           <div v-for="field in fields" :key="field.name">
             <label :for="field.name" class="mb-2 block text-sm font-medium">{{ field.label }}</label>
             <UInput :id="field.name" v-model="data[field.name]" :type="field.type" />
+          </div>
+        </div>
+      </template>
+      <template #socials>
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+          <div v-for="social in data.socials" :key="social.title">
+            <UFormGroup :label="social.title">
+              <UInput v-model="social.url" type="text" />
+            </UFormGroup>
           </div>
         </div>
       </template>
@@ -166,6 +176,16 @@ const items = [
             <URange
               id="gap"
               v-model="options.gap.image"
+              type="range"
+              :min="0"
+              :max="20"
+              class="w-full"
+            />
+          </UFormGroup>
+          <UFormGroup label="Social Gap">
+            <URange
+              id="gap"
+              v-model="options.gap.social"
               type="range"
               :min="0"
               :max="20"

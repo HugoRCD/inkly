@@ -84,17 +84,8 @@ function copyToClipboard() {
                       <table>
                         <tbody>
                           <tr :style="{ fontSize: `${options.size.social}px` }">
-                            <td style="padding-right: 10px;">
-                              <a href="https://hrcd.fr" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">Portfolio</a>
-                            </td>
-                            <td style="padding-right: 10px;">
-                              <a href="https://dub.sh/oQ44pBH" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">Twitter</a>
-                            </td>
-                            <td style="padding-right: 10px;">
-                              <a href="https://www.instagram.com/hugo.rcd_/" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">Instagram</a>
-                            </td>
-                            <td style="padding-right: 10px;">
-                              <a href="https://git.new/hugorcd" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">GitHub</a>
+                            <td v-for="social in data.socials.filter((social) => social.url)" :key="social.title" :style="{ paddingRight: `${options.gap.social}px` }">
+                              <a :href="social.url" style="text-decoration: underline" :style="{ color: `${options.color.social}` }">{{ social.title }}</a>
                             </td>
                           </tr>
                         </tbody>
