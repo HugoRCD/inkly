@@ -59,7 +59,7 @@ const data = ref<SignatureFormData>({
   ],
 })
 
-const theme = ref('light')
+const theme = ref('dark')
 </script>
 
 <template>
