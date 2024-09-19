@@ -195,5 +195,6 @@ const items = [
         </div>
       </template>
     </UTabs>
+    <div id="copy_button" />
   </div>
 </template>

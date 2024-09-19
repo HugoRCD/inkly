@@ -102,7 +102,13 @@ function copyToClipboard() {
         </template>
       </ClientOnly>
     </div>
-    <UButton :label="!copied ? copyButtonText : 'Copied!'" color="primary" :disabled="copied" @click="copyToClipboard()" />
+    <UButton
+      :label="!copied ? copyButtonText : 'Copied!'"
+      class="mt-4"
+      color="primary"
+      :disabled="copied"
+      @click="copyToClipboard()"
+    />
   </div>
 </template>
 

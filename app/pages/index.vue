@@ -34,7 +34,7 @@ const data = ref<SignatureFormData>({
   jobTitle: 'Développeur Web / Directeur Artistique',
   company: '',
   email: '',
-  phone: '0621562218',
+  phone: '(+33) 6 00 00 00 00',
   socials: [
     {
       title: 'Portfolio',

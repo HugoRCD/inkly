@@ -1,10 +1,10 @@
 <script setup lang="ts">
-useScriptPlausibleAnalytics({
+/*useScriptPlausibleAnalytics({
   domain: 'inkly.hrcd.fr',
   scriptInput: {
     src: 'https://analytics.hrcd.fr/js/script.js',
   }
-})
+})*/
 
 useSeoMeta({
   title: 'Inkly - Email Signature Generator',
@@ -24,8 +24,8 @@ useSeoMeta({
 </script>
 
 <template>
-  <Html class="h-full" lang="en">
-    <Body class="h-screen">
+  <Html lang="en">
+    <Body>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
@@ -35,7 +35,7 @@ useSeoMeta({
 </template>
 
 <style>
-#__nuxt, #__layout {
+#__nuxt, #__layout, body, html {
   height: 100%;
 }
 
