@@ -27,16 +27,16 @@
   },
   "devDependencies": {
     "@hrcd/eslint-config": "^2.0.2",
-    "@nuxt/scripts": "^0.8.5",
-    "@nuxt/ui": "^2.18.4",
-    "@vueuse/core": "^11.0.3",
-    "@vueuse/nuxt": "^11.0.3",
+    "@nuxt/scripts": "^0.9.2",
+    "@nuxt/ui": "^2.18.5",
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/nuxt": "^11.1.0",
     "automd": "^0.3.8",
-    "changelogen": "^0.5.5",
+    "changelogen": "^0.5.7",
     "eslint": "^9.10.0",
-    "nuxt": "^3.13.1",
+    "nuxt": "^3.13.2",
     "typescript": "^5.6.2",
-    "vitest": "^2.0.5",
+    "vitest": "^2.1.1",
     "vue": "latest"
   },
   "publishConfig": {
