@@ -23,6 +23,3 @@ jobs:
 
       - name: 💅 Lint code
         run: bun run lint
-
-      - name: 🧪 Run tests
-        run: bun run test

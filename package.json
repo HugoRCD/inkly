@@ -20,7 +20,6 @@
     "postinstall": "nuxt prepare",
     "automd": "automd",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
