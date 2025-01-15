@@ -26,7 +26,7 @@
   "devDependencies": {
     "@hrcd/eslint-config": "^2.1.1",
     "@nuxt/scripts": "^0.9.5",
-    "@nuxt/ui": "^2.20.0",
+    "@nuxt/ui": "^2.21.0",
     "@vueuse/core": "^11.3.0",
     "@vueuse/nuxt": "^11.3.0",
     "automd": "^0.3.12",
