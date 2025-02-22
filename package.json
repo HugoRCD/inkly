@@ -25,12 +25,12 @@
   },
   "devDependencies": {
     "@hrcd/eslint-config": "^2.2.1",
-    "@nuxt/scripts": "^0.10.3",
+    "@nuxt/scripts": "^0.10.5",
     "@nuxt/ui": "^2.21.0",
     "@vueuse/core": "^11.3.0",
     "@vueuse/nuxt": "^11.3.0",
     "automd": "^0.3.12",
-    "eslint": "^9.20.1",
+    "eslint": "^9.21.0",
     "nuxt": "^3.15.4"
   },
   "publishConfig": {
