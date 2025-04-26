@@ -16,9 +16,10 @@ function copyToClipboard() {
   try {
     copy()
     toast.add({
-      title: 'Copied to clipboard',
+      title: 'Signature copied to clipboard!',
+      description: 'You can now paste it in your email client.',
       icon: 'i-heroicons-clipboard-document-check',
-      color: 'neutral',
+      color: 'green',
       timeout: 2000,
     })
   } catch (error) {
@@ -39,7 +40,15 @@ function copyToClipboard() {
         <table :style="options.color.transparent ? {} : { backgroundColor: `${options.color.background}` }" style="width: 100%;">
           <tbody>
             <tr>
-              <td style="padding: 6px;" :style="{ width: `${options.image.size + options.gap.image}px` }">
+              <td 
+                style="padding: 6px;" 
+                :style="[
+                  { width: `${options.image.size + options.gap.image}px` },
+                  options.image.align === 'top' ? { verticalAlign: 'top' } : {},
+                  options.image.align === 'center' ? { verticalAlign: 'middle' } : {},
+                  options.image.align === 'bottom' ? { verticalAlign: 'bottom' } : {},
+                ]"
+              >
                 <img
                   :src="data.image"
                   alt="Profile Picture"
@@ -102,13 +111,19 @@ function copyToClipboard() {
       </ClientOnly>
     </div>
 
-    <div class="flex justify-end mt-2">
+    <div class="flex justify-center mt-6">
       <UButton
-        label="Copy Signature"
-        icon="i-heroicons-clipboard-document"
+        size="lg"
+        color="primary"
+        variant="solid"
         :loading="copied"
         @click="copyToClipboard()"
-      />
+      >
+        <template #leading>
+          <UIcon :name="copied ? 'i-heroicons-clipboard-document-check' : 'i-heroicons-clipboard-document'" />
+        </template>
+        {{ copied ? 'Copied!' : 'Copy Signature' }}
+      </UButton>
     </div>
   </div>
 </template>
