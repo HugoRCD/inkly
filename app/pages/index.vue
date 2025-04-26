@@ -31,7 +31,7 @@ const options = ref<SignatureOptions>({
 const data = ref<SignatureFormData>({
   image: 'https://avatars.githubusercontent.com/u/71938701?v=4',
   fullName: 'Hugo Richard',
-  jobTitle: 'Développeur Web / Directeur Artistique',
+  jobTitle: 'Software Engineer at Nuxtlabs',
   company: '',
   email: '',
   phone: '(+33) 6 00 00 00 00',
@@ -64,7 +64,7 @@ const theme = ref('dark')
 
 <template>
   <div class="flex h-full flex-col bg-black text-white">
-    <div class="relative flex flex-col gap-8 bg-gray-900 p-5 shadow-lg">
+    <div class="relative flex flex-col gap-8 bg-neutral-900 p-5 shadow-lg">
       <SettingsOption v-model:options="options" v-model:data="data" />
     </div>
     <div class="relative flex h-full flex-col items-center justify-center" :class="theme === 'light' ? 'text-black bg-white' : 'text-white bg-black '">

@@ -9,7 +9,7 @@ const copyButtonText = ref('Copy Signature')
 
 const signatureContainer = ref<HTMLElement>()
 
-const { copy, copied } = useClipboard({ source: () => signatureContainer.value.innerHTML, copiedDuring: 2000 })
+const { copy, copied } = useClipboard({ source: () => signatureContainer.value!.innerHTML, copiedDuring: 2000 })
 
 function copyToClipboard() {
   try {
@@ -18,16 +18,14 @@ function copyToClipboard() {
       title: 'Copied!',
       description: 'Signature copied to clipboard',
       icon: 'lucide:clipboard-check',
-      variant: 'success',
-      timeout: 2000,
+      color: 'success',
     })
   } catch (error) {
     toast.add({
       title: 'Error',
       description: 'Failed to copy signature to clipboard',
       icon: 'lucide:alert-circle',
-      variant: 'danger',
-      timeout: 2000,
+      color: 'error',
     })
   }
 }
@@ -105,7 +103,6 @@ function copyToClipboard() {
     <UButton
       :label="!copied ? copyButtonText : 'Copied!'"
       class="mt-4"
-      color="primary"
       :disabled="copied"
       @click="copyToClipboard()"
     />

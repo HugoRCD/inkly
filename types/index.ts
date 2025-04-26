@@ -2,7 +2,7 @@ export type Alignment = 'top' | 'center' | 'bottom'
 
 export type Form = 'circle' | 'square' | 'rectangle'
 
-export type SocialMedia = 'twitter' | 'instagram' | 'github' | 'linkedin'
+export type SocialMedia = 'twitter' | 'instagram' | 'github' | 'linkedin' | 'portfolio'
 
 export type Social = {
   title: string

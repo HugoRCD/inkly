@@ -21,6 +21,8 @@ export default defineNuxtConfig({
     '/': { isr: true, prerender: true },
   },
 
+  css: ['~/assets/style/main.css'],
+
   icon: {
     mode: 'svg',
     customCollections: [

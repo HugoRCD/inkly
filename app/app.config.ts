@@ -1,6 +1,13 @@
 export default defineAppConfig({
   ui: {
-    primary: 'cyan',
-    gray: 'neutral',
+    colors: {
+      primary: 'cyan',
+      neutral: 'neutral',
+    },
+    input: {
+      slots: {
+        root: 'w-full'
+      }
+    }
   },
 })

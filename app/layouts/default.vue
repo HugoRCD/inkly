@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <div class="flex h-full flex-col">
     <LayoutNavbar />
@@ -10,7 +6,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { Alignment, SignatureFormData, SignatureOptions } from '~~/types'
 
-const options = defineModel<SignatureOptions>('options')
-const data = defineModel<SignatureFormData>('data')
+const options = defineModel<SignatureOptions>('options', { required: true })
+const data = defineModel<SignatureFormData>('data', { required: true })
 
 function setAlign(newAlign: Alignment) {
   options.value.image.align = newAlign
 }
 
-function setImageForm(newImageForm: ImageForm) {
+function setImageForm(newImageForm: any) {
   options.value.image.form = newImageForm
 }
 
@@ -50,7 +50,7 @@ const items = [
   <div>
     <UTabs :items>
       <template #information>
-        <div class="grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+        <div class="grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
           <div v-for="field in fields" :key="field.name">
             <label :for="field.name" class="mb-2 block text-sm font-medium">{{ field.label }}</label>
             <UInput :id="field.name" v-model="data[field.name]" :type="field.type" />
@@ -58,33 +58,33 @@ const items = [
         </div>
       </template>
       <template #socials>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
           <div v-for="social in data.socials" :key="social.title">
-            <UFormGroup :label="social.title">
+            <UFormField :label="social.title">
               <UInput v-model="social.url" type="text" />
-            </UFormGroup>
+            </UFormField>
           </div>
         </div>
       </template>
       <template #image>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
-          <UFormGroup label="Image URL">
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
+          <UFormField label="Image URL">
             <UInput id="image" v-model="data.image" type="text" />
-          </UFormGroup>
-          <UFormGroup label="Image Form">
+          </UFormField>
+          <UFormField label="Image Form">
             <UButtonGroup label="Image Form" class="w-full" orientation="horizontal">
               <UButton
                 v-for="form in ['circle', 'square', 'rectangle']"
                 :key="form"
-                :color="form === options.image.form ? 'primary' : 'gray'"
+                :color="form === options.image.form ? 'primary' : 'neutral'"
                 @click="setImageForm(form)"
               >
                 {{ form }}
               </UButton>
             </UButtonGroup>
-          </UFormGroup>
-          <UFormGroup label="Image Size">
-            <URange
+          </UFormField>
+          <UFormField label="Image Size">
+            <USlider
               id="imageSize"
               v-model="options.image.size"
               type="range"
@@ -92,56 +92,56 @@ const items = [
               :max="120"
               class="w-full"
             />
-          </UFormGroup>
-          <UFormGroup label="Image Alignment">
+          </UFormField>
+          <UFormField label="Image Alignment">
             <UButtonGroup label="Image Alignment" class="w-full" orientation="horizontal">
               <UButton
                 v-for="alignment in ['top', 'center', 'bottom']"
                 :key="alignment"
-                :color="alignment === options.image.align ? 'primary' : 'gray'"
-                @click="setAlign(alignment)"
+                :color="alignment === options.image.align ? 'primary' : 'neutral'"
+                @click="setAlign(alignment as Alignment)"
               >
                 {{ alignment }}
               </UButton>
             </UButtonGroup>
-          </UFormGroup>
+          </UFormField>
         </div>
       </template>
       <template #size>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
-          <UFormGroup label="Title Size">
-            <URange
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
+          <UFormField label="Title Size">
+            <USlider
               id="titleSize"
               v-model="options.size.title"
               type="range"
               :min="12"
               :max="24"
             />
-          </UFormGroup>
-          <UFormGroup label="Subtitle Size">
-            <URange
+          </UFormField>
+          <UFormField label="Subtitle Size">
+            <USlider
               id="textSize"
               v-model="options.size.subtitle"
               type="range"
               :min="12"
               :max="24"
             />
-          </UFormGroup>
-          <UFormGroup label="Social Size">
-            <URange
+          </UFormField>
+          <UFormField label="Social Size">
+            <USlider
               id="socialSize"
               v-model="options.size.social"
               type="range"
               :min="12"
               :max="24"
             />
-          </UFormGroup>
+          </UFormField>
         </div>
       </template>
       <template #color>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
           <div class="flex flex-col gap-2">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-200">
               Title Color
             </span>
             <div class="flex w-full items-center gap-4">
@@ -151,11 +151,11 @@ const items = [
               </UTooltip>
             </div>
           </div>
-          <UFormGroup label="Subtitle Color">
+          <UFormField label="Subtitle Color">
             <UInput v-model="options.color.subtitle" type="color" />
-          </UFormGroup>
+          </UFormField>
           <div class="flex flex-col gap-2">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-200">
               Background Color
             </span>
             <div class="flex w-full items-center gap-4">
@@ -165,15 +165,15 @@ const items = [
               </UTooltip>
             </div>
           </div>
-          <UFormGroup label="Social Color">
+          <UFormField label="Social Color">
             <UInput v-model="options.color.social" type="color" />
-          </UFormGroup>
+          </UFormField>
         </div>
       </template>
       <template #gap>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-gray-950 p-4">
-          <UFormGroup label="Image Gap">
-            <URange
+        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
+          <UFormField label="Image Gap">
+            <USlider
               id="gap"
               v-model="options.gap.image"
               type="range"
@@ -181,9 +181,9 @@ const items = [
               :max="30"
               class="w-full"
             />
-          </UFormGroup>
-          <UFormGroup label="Social Gap">
-            <URange
+          </UFormField>
+          <UFormField label="Social Gap">
+            <USlider
               id="gap"
               v-model="options.gap.social"
               type="range"
@@ -191,7 +191,7 @@ const items = [
               :max="20"
               class="w-full"
             />
-          </UFormGroup>
+          </UFormField>
         </div>
       </template>
     </UTabs>
