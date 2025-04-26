@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Alignment, SignatureFormData, SignatureOptions } from '~~/types'
+import type { Alignment, SignatureFormData, SignatureOptions, TabsItem } from '~~/types'
 
 const options = defineModel<SignatureOptions>('options', { required: true })
 const data = defineModel<SignatureFormData>('data', { required: true })
@@ -12,189 +12,512 @@ function setImageForm(newImageForm: any) {
   options.value.image.form = newImageForm
 }
 
+const items = [
+  { 
+    label: 'Information',
+    icon: 'i-lucide-user',
+    slot: 'information' as const
+  },
+  { 
+    label: 'Socials',
+    icon: 'i-lucide-share',
+    slot: 'socials' as const
+  },
+  { 
+    label: 'Image',
+    icon: 'i-lucide-image',
+    slot: 'image' as const
+  },
+  { 
+    label: 'Size',
+    icon: 'i-lucide-type',
+    slot: 'size' as const
+  },
+  { 
+    label: 'Color',
+    icon: 'i-lucide-palette',
+    slot: 'color' as const
+  },
+  { 
+    label: 'Gap',
+    icon: 'i-lucide-move-horizontal',
+    slot: 'gap' as const
+  }
+] satisfies TabsItem[]
+
 const fields = [
-  { name: 'fullName', label: 'Full Name', type: 'text' },
-  { name: 'jobTitle', label: 'Job Title', type: 'text' },
-  { name: 'company', label: 'Company', type: 'text' },
-  { name: 'email', label: 'Email', type: 'email' },
-  { name: 'phone', label: 'Phone', type: 'tel' },
+  { name: 'fullName', label: 'Full Name', type: 'text', icon: 'i-lucide-user' },
+  { name: 'jobTitle', label: 'Job Title', type: 'text', icon: 'i-lucide-briefcase' },
+  { name: 'company', label: 'Company', type: 'text', icon: 'i-lucide-building' },
+  { name: 'email', label: 'Email', type: 'email', icon: 'i-lucide-mail' },
+  { name: 'phone', label: 'Phone', type: 'tel', icon: 'i-lucide-phone' },
 ]
 
-const items = [
-  {
-    label: 'Personal Information',
-    icon: 'lucide:user',
-    slot: 'information',
-  },
-  { label: 'Socials', icon: 'lucide:share-2', slot: 'socials' },
-  {
-    label: 'Image',
-    icon: 'lucide:image',
-    slot: 'image',
-  },
-  {
-    label: 'Size',
-    icon: 'lucide:ruler',
-    slot: 'size',
-  },
-  { label: 'Color', icon: 'lucide:palette', slot: 'color' },
-  {
-    label: 'Gap',
-    icon: 'lucide:grid',
-    slot: 'gap',
-  },
-]
+const socialIcons = {
+  portfolio: 'i-lucide-globe',
+  twitter: 'i-simple-icons-x',
+  instagram: 'i-simple-icons-instagram',
+  github: 'i-simple-icons-github',
+  linkedin: 'i-simple-icons-linkedin',
+}
+
+const uid = Math.random().toString(36).substring(2, 15)
 </script>
 
 <template>
   <div>
-    <UTabs :items>
+    <UTabs :items class="w-full">
       <template #information>
-        <div class="grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
-          <div v-for="field in fields" :key="field.name">
-            <label :for="field.name" class="mb-2 block text-sm font-medium">{{ field.label }}</label>
-            <UInput :id="field.name" v-model="data[field.name]" :type="field.type" />
+        <div class="mt-4">
+          <div v-for="field in fields" :key="field.name" class="mb-4">
+            <label :for="field.name" class="block text-sm font-medium mb-1">{{ field.label }}</label>
+            <UInput 
+              :id="`${field.name}-${uid}`" 
+              v-model="data[field.name]" 
+              :type="field.type"
+              :icon="field.icon"
+            />
           </div>
         </div>
       </template>
+
       <template #socials>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
-          <div v-for="social in data.socials" :key="social.title">
-            <UFormField :label="social.title">
-              <UInput v-model="social.url" type="text" />
-            </UFormField>
+        <div class="mt-4">
+          <div v-for="social in data.socials" :key="social.title" class="mb-4">
+            <label class="block text-sm font-medium mb-1">{{ social.title }}</label>
+            <UInput 
+              v-model="social.url" 
+              type="text" 
+              :icon="socialIcons[social.type] || 'i-lucide-link'"
+              :placeholder="`${social.title} URL`"
+              class="w-full"
+            />
           </div>
         </div>
       </template>
+
       <template #image>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
-          <UFormField label="Image URL">
-            <UInput id="image" v-model="data.image" type="text" />
-          </UFormField>
-          <UFormField label="Image Form">
-            <UButtonGroup label="Image Form" class="w-full" orientation="horizontal">
+        <div class="mt-4 space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Image URL</label>
+            <UInput 
+              id="image" 
+              v-model="data.image" 
+              type="text" 
+              icon="i-lucide-link"
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Image Shape</label>
+            <UButtonGroup>
               <UButton
                 v-for="form in ['circle', 'square', 'rectangle']"
                 :key="form"
-                :color="form === options.image.form ? 'primary' : 'neutral'"
+                size="xs"
+                :color="form === options.image.form ? 'primary' : 'gray'"
+                :variant="form === options.image.form ? 'solid' : 'ghost'"
                 @click="setImageForm(form)"
               >
-                {{ form }}
+                <UIcon :name="form === 'circle' ? 'i-lucide-circle' : form === 'square' ? 'i-lucide-square' : 'i-lucide-rectangle-horizontal'" class="size-4" />
+                <span class="ml-1">{{ form }}</span>
               </UButton>
             </UButtonGroup>
-          </UFormField>
-          <UFormField label="Image Size">
-            <USlider
-              id="imageSize"
-              v-model="options.image.size"
-              type="range"
-              :min="40"
-              :max="120"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Image Alignment">
-            <UButtonGroup label="Image Alignment" class="w-full" orientation="horizontal">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Image Alignment</label>
+            <UButtonGroup>
               <UButton
                 v-for="alignment in ['top', 'center', 'bottom']"
                 :key="alignment"
+                size="xs"
                 :color="alignment === options.image.align ? 'primary' : 'neutral'"
+                :variant="alignment === options.image.align ? 'solid' : 'ghost'"
                 @click="setAlign(alignment as Alignment)"
               >
-                {{ alignment }}
+                <UIcon 
+                  :name="
+                    alignment === 'top' ? 'i-lucide-arrow-big-up-dash' : 
+                    alignment === 'center' ? 'i-lucide-align-center-vertical' : 
+                    'i-lucide-arrow-big-down-dash'
+                  " 
+                  class="size-4"
+                />
+                <span class="ml-1">{{ alignment }}</span>
               </UButton>
             </UButtonGroup>
-          </UFormField>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Image Size</label>
+            <div class="flex items-center gap-2">
+              <USlider
+                v-model="options.image.size"
+                :min="40"
+                :max="120"
+                class="flex-1"
+              />
+              <UInput
+                v-model.number="options.image.size"
+                type="number"
+                :min="40"
+                :max="120"
+                size="sm"
+                class="w-20"
+              >
+                <template #trailing>
+                  <span class="text-xs text-gray-500">px</span>
+                </template>
+              </UInput>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-sm font-medium">Image Border</label>
+              <UCheckbox 
+                v-model="options.image.border" 
+                label="Show border" 
+                :ui="{ wrapper: 'items-center gap-1.5' }"
+              />
+            </div>
+            <div v-if="options.image.border" class="space-y-3">
+              <div>
+                <label class="block text-xs text-muted mb-1">Style</label>
+                <UButtonGroup class="w-full">
+                  <UButton
+                    v-for="style in ['solid', 'dashed', 'dotted']"
+                    :key="style"
+                    size="xs"
+                    class="flex-1"
+                    :color="style === options.image.borderStyle ? 'primary' : 'neutral'"
+                    :variant="style === options.image.borderStyle ? 'solid' : 'ghost'"
+                    @click="options.image.borderStyle = style"
+                  >
+                    {{ style }}
+                  </UButton>
+                </UButtonGroup>
+              </div>
+              
+              <div>
+                <label class="block text-xs text-muted mb-1">Width</label>
+                <div class="flex items-center gap-2">
+                  <USlider
+                    v-model="options.image.borderWidth"
+                    :min="1"
+                    :max="5"
+                    class="flex-1"
+                  />
+                  <UInput
+                    v-model.number="options.image.borderWidth"
+                    type="number"
+                    :min="1"
+                    :max="5"
+                    size="sm"
+                    class="w-20"
+                  >
+                    <template #trailing>
+                      <span class="text-xs text-muted">px</span>
+                    </template>
+                  </UInput>
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-xs text-muted mb-1">Color</label>
+                <UPopover>
+                  <UButton color="neutral" variant="outline" size="sm" class="w-full">
+                    <template #leading>
+                      <span 
+                        class="size-4 rounded-full border border-default" 
+                        :style="{ backgroundColor: options.image.borderColor }"
+                      />
+                    </template>
+                    Border Color
+                  </UButton>
+
+                  <template #content>
+                    <div class="p-2 w-[240px]">
+                      <UColorPicker v-model="options.image.borderColor" />
+                    </div>
+                  </template>
+                </UPopover>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-sm font-medium">Image Shadow</label>
+              <UCheckbox 
+                v-model="options.image.shadow" 
+                label="Add shadow" 
+                :ui="{ wrapper: 'items-center gap-1.5' }"
+              />
+            </div>
+            <div v-if="options.image.shadow" class="space-y-3">
+              <div>
+                <label class="block text-xs text-muted mb-1">Intensity</label>
+                <USlider
+                  v-model="options.image.shadowIntensity"
+                  :min="1"
+                  :max="5"
+                  class="w-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </template>
+
       <template #size>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
-          <UFormField label="Title Size">
-            <USlider
-              id="titleSize"
-              v-model="options.size.title"
-              type="range"
-              :min="12"
-              :max="24"
+        <div class="mt-4 space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Title Font Size</label>
+            <div class="flex items-center gap-2">
+              <USlider
+                v-model="options.size.title"
+                :min="12"
+                :max="24"
+                class="flex-1"
+              />
+              <UInput
+                v-model.number="options.size.title"
+                type="number"
+                :min="12"
+                :max="24"
+                size="sm"
+                class="w-20"
+              >
+                <template #trailing>
+                  <span class="text-xs text-muted">px</span>
+                </template>
+              </UInput>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Subtitle Font Size</label>
+            <div class="flex items-center gap-2">
+              <USlider
+                v-model="options.size.subtitle"
+                :min="10"
+                :max="18"
+                class="flex-1"
+              />
+              <UInput
+                v-model.number="options.size.subtitle"
+                type="number"
+                :min="10"
+                :max="18"
+                size="sm"
+                class="w-20"
+              >
+                <template #trailing>
+                  <span class="text-xs text-muted">px</span>
+                </template>
+              </UInput>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Social Font Size</label>
+            <div class="flex items-center gap-2">
+              <USlider
+                v-model="options.size.social"
+                :min="10"
+                :max="18"
+                class="flex-1"
+              />
+              <UInput
+                v-model.number="options.size.social"
+                type="number"
+                :min="10"
+                :max="18"
+                size="sm"
+                class="w-20"
+              >
+                <template #trailing>
+                  <span class="text-xs text-muted">px</span>
+                </template>
+              </UInput>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">Font Family</label>
+            <USelect
+              v-model="options.font.family"
+              :items="[
+                { label: 'Inter', value: 'inter' },
+                { label: 'SF Pro', value: 'sf' },
+                { label: 'Roboto', value: 'roboto' },
+                { label: 'Arial', value: 'arial' }
+              ]"
+              class="w-full"
             />
-          </UFormField>
-          <UFormField label="Subtitle Size">
-            <USlider
-              id="textSize"
-              v-model="options.size.subtitle"
-              type="range"
-              :min="12"
-              :max="24"
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-2">Title Font Weight</label>
+            <USelect
+              v-model="options.font.titleWeight"
+              :items="[
+                { label: 'Regular', value: '400' },
+                { label: 'Medium', value: '500' },
+                { label: 'Semi Bold', value: '600' },
+                { label: 'Bold', value: '700' }
+              ]"
+              class="w-full"
             />
-          </UFormField>
-          <UFormField label="Social Size">
-            <USlider
-              id="socialSize"
-              v-model="options.size.social"
-              type="range"
-              :min="12"
-              :max="24"
-            />
-          </UFormField>
+          </div>
         </div>
       </template>
+
       <template #color>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
-          <div class="flex flex-col gap-2">
-            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-200">
-              Title Color
-            </span>
-            <div class="flex w-full items-center gap-4">
-              <UInput v-model="options.color.title" type="color" class="w-full" />
-              <UTooltip text="Auto-color">
-                <UCheckbox v-model="options.color.autoTitle" />
-              </UTooltip>
+        <div class="mt-4 space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <UPopover>
+                <UButton color="neutral" variant="outline" size="sm">
+                  <template #leading>
+                    <span 
+                      class="size-4 rounded-full border border-default" 
+                      :style="{ backgroundColor: options.color.title }"
+                    />
+                  </template>
+                  Title Color
+                </UButton>
+
+                <template #content>
+                  <div class="p-2 w-[240px]">
+                    <UColorPicker v-model="options.color.title" />
+                  </div>
+                </template>
+              </UPopover>
+
+              <UCheckbox 
+                v-model="options.color.autoTitle" 
+                label="Auto adapt" 
+                :ui="{ 
+                  wrapper: 'items-center gap-1.5',
+                  label: 'text-xs text-muted'
+                }"
+              />
             </div>
           </div>
-          <UFormField label="Subtitle Color">
-            <UInput v-model="options.color.subtitle" type="color" />
-          </UFormField>
-          <div class="flex flex-col gap-2">
-            <span class="text-sm font-medium text-neutral-700 dark:text-neutral-200">
-              Background Color
-            </span>
-            <div class="flex w-full items-center gap-4">
-              <UInput v-model="options.color.background" type="color" class="w-full" />
-              <UTooltip text="Transparent">
-                <UCheckbox v-model="options.color.transparent" />
-              </UTooltip>
+
+          <div class="flex items-center justify-between">
+            <UPopover>
+              <UButton color="neutral" variant="outline" size="sm">
+                <template #leading>
+                  <span 
+                    class="size-4 rounded-full border border-default" 
+                    :style="{ backgroundColor: options.color.subtitle }"
+                  />
+                </template>
+                Subtitle Color
+              </UButton>
+
+              <template #content>
+                <div class="p-2 w-[240px]">
+                  <UColorPicker v-model="options.color.subtitle" />
+                </div>
+              </template>
+            </UPopover>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <UPopover>
+                <UButton color="neutral" variant="outline" size="sm">
+                  <template #leading>
+                    <span 
+                      class="size-4 rounded-full border border-default" 
+                      :style="{ 
+                        backgroundColor: options.color.background,
+                        opacity: options.color.transparent ? 0.5 : 1
+                      }"
+                    />
+                  </template>
+                  Background
+                </UButton>
+
+                <template #content>
+                  <div class="p-2 w-[240px]">
+                    <UColorPicker v-model="options.color.background" />
+                  </div>
+                </template>
+              </UPopover>
+
+              <UCheckbox 
+                v-model="options.color.transparent" 
+                label="Transparent" 
+                :ui="{ 
+                  wrapper: 'items-center gap-1.5',
+                  label: 'text-xs text-muted'
+                }"
+              />
             </div>
           </div>
-          <UFormField label="Social Color">
-            <UInput v-model="options.color.social" type="color" />
-          </UFormField>
+
+          <div class="flex items-center justify-between">
+            <UPopover>
+              <UButton color="neutral" variant="outline" size="sm">
+                <template #leading>
+                  <span 
+                    class="size-4 rounded-full border border-default" 
+                    :style="{ backgroundColor: options.color.social }"
+                  />
+                </template>
+                Social Links
+              </UButton>
+
+              <template #content>
+                <div class="p-2 w-[240px]">
+                  <UColorPicker v-model="options.color.social" />
+                </div>
+              </template>
+            </UPopover>
+          </div>
         </div>
       </template>
+
       <template #gap>
-        <div class="mt-4 grid grid-cols-2 gap-6 rounded-md bg-neutral-950 p-4">
-          <UFormField label="Image Gap">
-            <USlider
-              id="gap"
-              v-model="options.gap.image"
-              type="range"
-              :min="12"
-              :max="30"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Social Gap">
-            <USlider
-              id="gap"
-              v-model="options.gap.social"
-              type="range"
-              :min="0"
-              :max="20"
-              class="w-full"
-            />
-          </UFormField>
+        <div class="mt-4 space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Image Gap</label>
+            <div class="flex items-center gap-2">
+              <USlider
+                v-model="options.gap.image"
+                :min="0"
+                :max="30"
+                class="flex-1"
+              />
+              <span class="bg-gray-200 dark:bg-neutral-800 px-2 py-1 rounded-md text-xs">
+                {{ options.gap.image }}px
+              </span>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-1">Social Links Gap</label>
+            <div class="flex items-center gap-2">
+              <USlider
+                v-model="options.gap.social"
+                :min="0"
+                :max="20"
+                class="flex-1"
+              />
+              <span class="bg-gray-200 dark:bg-neutral-800 px-2 py-1 rounded-md text-xs">
+                {{ options.gap.social }}px
+              </span>
+            </div>
+          </div>
         </div>
       </template>
     </UTabs>
-    <div id="copy_button" />
   </div>
 </template>

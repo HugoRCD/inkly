@@ -1,44 +1,54 @@
 <script setup lang="ts">
 import type { Signature } from '~~/types'
 
-const { data, options } = defineProps<Signature>()
+const props = defineProps<Signature & { theme?: string }>()
+const { data, options, theme = 'dark' } = props
 
 const toast = useToast()
-
-const copyButtonText = ref('Copy Signature')
-
 const signatureContainer = ref<HTMLElement>()
 
-const { copy, copied } = useClipboard({ source: () => signatureContainer.value!.innerHTML, copiedDuring: 2000 })
+const { copy, copied } = useClipboard({ 
+  source: () => signatureContainer.value!.innerHTML, 
+  copiedDuring: 1000 
+})
 
 function copyToClipboard() {
   try {
     copy()
     toast.add({
-      title: 'Copied!',
-      description: 'Signature copied to clipboard',
-      icon: 'lucide:clipboard-check',
-      color: 'success',
+      title: 'Signature copied to clipboard!',
+      description: 'You can now paste it in your email client.',
+      icon: 'i-heroicons-clipboard-document-check',
+      color: 'green',
+      timeout: 2000,
     })
   } catch (error) {
     toast.add({
-      title: 'Error',
-      description: 'Failed to copy signature to clipboard',
-      icon: 'lucide:alert-circle',
-      color: 'error',
+      title: 'Failed to copy',
+      icon: 'i-heroicons-exclamation-circle',
+      color: 'red',
+      timeout: 2000,
     })
   }
 }
 </script>
 
 <template>
-  <div class="flex w-full flex-col items-center justify-center space-y-4 px-4">
-    <div ref="signatureContainer" class="w-full rounded-md p-4">
+  <div class="w-full">
+    <div ref="signatureContainer" class="py-2">
       <ClientOnly>
         <table :style="options.color.transparent ? {} : { backgroundColor: `${options.color.background}` }" style="width: 100%;">
           <tbody>
             <tr>
-              <td style="padding: 6px;" :style="{ width: `${options.image.size + options.gap.image}px` }">
+              <td 
+                style="padding: 6px;" 
+                :style="[
+                  { width: `${options.image.size + options.gap.image}px` },
+                  options.image.align === 'top' ? { verticalAlign: 'top' } : {},
+                  options.image.align === 'center' ? { verticalAlign: 'middle' } : {},
+                  options.image.align === 'bottom' ? { verticalAlign: 'bottom' } : {},
+                ]"
+              >
                 <img
                   :src="data.image"
                   alt="Profile Picture"
@@ -47,13 +57,38 @@ function copyToClipboard() {
                     options.image.form === 'square' ? { width: `${options.image.size}px`, height: `${options.image.size}px` } : {},
                     options.image.form === 'circle' ? { width: `${options.image.size}px`, height: `${options.image.size}px`, borderRadius: `${options.image.size}px` } : {},
                     { objectFit: 'cover' },
+                    options.image.border ? {
+                      border: `${options.image.borderWidth}px ${options.image.borderStyle} ${options.image.borderColor}`,
+                    } : {},
+                    options.image.shadow ? {
+                      boxShadow: `0 ${options.image.shadowIntensity * 2}px ${options.image.shadowIntensity * 4}px -${options.image.shadowIntensity}px rgb(0 0 0 / ${options.image.shadowIntensity * 0.05})`
+                    } : {},
                   ]"
                 >
               </td>
-              <td style="padding: 6px; font-family: 'Inter', sans-serif;" :style="{ fontSize: `${options.size.subtitle}px` }">
+              <td
+                style="padding: 6px;"
+                :style="[
+                  { fontSize: `${options.size.subtitle}px` }
+                ]"
+                :class="[
+                  options.font.family === 'inter' ? 'font-inter' :
+                  options.font.family === 'sf' ? 'font-sf' :
+                  options.font.family === 'roboto' ? 'font-roboto' :
+                  'font-arial'
+                ]"
+              >
                 <table :style="{ fontSize: `${options.size.subtitle}px` }">
                   <tr v-if="data.fullName">
-                    <td :style="{ fontWeight: '600', fontSize: `${options.size.title}px`, color: options.color.autoTitle ? '' : options.color.title }">
+                    <td
+                      :style="[
+                        { 
+                          fontSize: `${options.size.title}px`,
+                          color: options.color.autoTitle ? '' : options.color.title,
+                          fontWeight: options.font.titleWeight
+                        }
+                      ]"
+                    >
                       {{ data.fullName }}
                     </td>
                   </tr>
@@ -96,16 +131,21 @@ function copyToClipboard() {
           </tbody>
         </table>
         <template #fallback>
-          <div class="h-28" />
+          <div class="h-24 animate-pulse bg-neutral-700 rounded-md" />
         </template>
       </ClientOnly>
     </div>
-    <UButton
-      :label="!copied ? copyButtonText : 'Copied!'"
-      class="mt-4"
-      :disabled="copied"
-      @click="copyToClipboard()"
-    />
+
+    <div class="flex justify-center mt-6">
+      <UButton
+        size="lg"
+        color="primary"
+        variant="solid"
+        :icon="copied ? 'i-heroicons-clipboard-document-check' : 'i-heroicons-clipboard-document'"
+        :label="copied ? 'Copied!' : 'Copy Signature'"
+        @click="copyToClipboard()"
+      />
+    </div>
   </div>
 </template>
 
