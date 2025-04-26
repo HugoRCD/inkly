@@ -6,3 +6,11 @@
   --font-sans: "Geist", sans-serif;
   --font-mono: "Geist Mono", sans-serif;
 }
+
+:root {
+  --ui-primary: black;
+}
+
+.dark {
+  --ui-primary: white;
+}

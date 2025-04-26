@@ -1,39 +1,40 @@
 <script setup lang="ts">
 import type { Signature } from '~~/types'
 
-const { data, options } = defineProps<Signature>()
+const props = defineProps<Signature & { theme?: string }>()
+const { data, options, theme = 'dark' } = props
 
 const toast = useToast()
-
-const copyButtonText = ref('Copy Signature')
-
 const signatureContainer = ref<HTMLElement>()
 
-const { copy, copied } = useClipboard({ source: () => signatureContainer.value!.innerHTML, copiedDuring: 2000 })
+const { copy, copied } = useClipboard({ 
+  source: () => signatureContainer.value!.innerHTML, 
+  copiedDuring: 2000 
+})
 
 function copyToClipboard() {
   try {
     copy()
     toast.add({
-      title: 'Copied!',
-      description: 'Signature copied to clipboard',
-      icon: 'lucide:clipboard-check',
-      color: 'success',
+      title: 'Copied to clipboard',
+      icon: 'i-heroicons-clipboard-document-check',
+      color: 'neutral',
+      timeout: 2000,
     })
   } catch (error) {
     toast.add({
-      title: 'Error',
-      description: 'Failed to copy signature to clipboard',
-      icon: 'lucide:alert-circle',
-      color: 'error',
+      title: 'Failed to copy',
+      icon: 'i-heroicons-exclamation-circle',
+      color: 'red',
+      timeout: 2000,
     })
   }
 }
 </script>
 
 <template>
-  <div class="flex w-full flex-col items-center justify-center space-y-4 px-4">
-    <div ref="signatureContainer" class="w-full rounded-md p-4">
+  <div class="w-full">
+    <div ref="signatureContainer" class="py-2">
       <ClientOnly>
         <table :style="options.color.transparent ? {} : { backgroundColor: `${options.color.background}` }" style="width: 100%;">
           <tbody>
@@ -96,16 +97,19 @@ function copyToClipboard() {
           </tbody>
         </table>
         <template #fallback>
-          <div class="h-28" />
+          <div class="h-24 animate-pulse bg-neutral-700 rounded-md" />
         </template>
       </ClientOnly>
     </div>
-    <UButton
-      :label="!copied ? copyButtonText : 'Copied!'"
-      class="mt-4"
-      :disabled="copied"
-      @click="copyToClipboard()"
-    />
+
+    <div class="flex justify-end mt-2">
+      <UButton
+        label="Copy Signature"
+        icon="i-heroicons-clipboard-document"
+        :loading="copied"
+        @click="copyToClipboard()"
+      />
+    </div>
   </div>
 </template>
 
