@@ -25,7 +25,17 @@ const options = ref<SignatureOptions>({
     align: 'center',
     form: 'circle',
     size: 90,
+    border: false,
+    borderStyle: 'solid',
+    borderColor: '#000000',
+    borderWidth: 1,
+    shadow: false,
+    shadowIntensity: 2
   },
+  font: {
+    family: 'inter',
+    titleWeight: '600'
+  }
 })
 
 const data = ref<SignatureFormData>({
@@ -61,7 +71,6 @@ const data = ref<SignatureFormData>({
 
 const theme = ref('dark')
 
-// Création d'un sujet et contenu d'email fictif pour la prévisualisation
 const emailSubject = 'Professionnal Email Signature'
 const emailContent = ref(`Hello,
 
@@ -70,7 +79,6 @@ Feel free to reach out if you have any questions!
 
 Best regards,`)
 
-// Pour le responsive
 const isMobile = ref(false)
 const showSidebar = ref(true)
 

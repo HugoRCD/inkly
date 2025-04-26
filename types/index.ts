@@ -1,6 +1,9 @@
 export type Alignment = 'top' | 'center' | 'bottom'
-
-export type Form = 'circle' | 'square' | 'rectangle'
+export type ImageForm = 'circle' | 'square' | 'rectangle'
+export type BorderStyle = 'solid' | 'dashed' | 'dotted'
+export type ShadowSize = 'sm' | 'md' | 'lg'
+export type FontFamily = 'inter' | 'sf' | 'roboto' | 'arial'
+export type FontWeight = '400' | '500' | '600' | '700'
 
 export type SocialMedia = 'twitter' | 'instagram' | 'github' | 'linkedin' | 'portfolio'
 
@@ -10,17 +13,7 @@ export type Social = {
   type: SocialMedia
 }
 
-export type SignatureFormData = {
-  image: string
-  fullName: string
-  jobTitle: string
-  company: string
-  email: string
-  phone: string
-  socials: Social[]
-}
-
-export type SignatureOptions = {
+export interface SignatureOptions {
   gap: {
     title: number
     subtitle: number
@@ -42,12 +35,37 @@ export type SignatureOptions = {
   }
   image: {
     align: Alignment
-    form: Form
+    form: ImageForm
     size: number
+    border: boolean
+    borderStyle: BorderStyle
+    borderColor: string
+    borderWidth: number
+    shadow: boolean
+    shadowSize: ShadowSize
+  }
+  font: {
+    family: FontFamily
+    titleWeight: FontWeight
   }
 }
 
-export type Signature = {
+export interface SignatureFormData {
+  image: string
+  fullName: string
+  jobTitle: string
+  company: string
+  email: string
+  phone: string
+  socials: Array<{
+    title: string
+    url: string
+    type: string
+  }>
+}
+
+export interface Signature {
   data: SignatureFormData
   options: SignatureOptions
 }
+

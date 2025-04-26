@@ -9,7 +9,7 @@ const signatureContainer = ref<HTMLElement>()
 
 const { copy, copied } = useClipboard({ 
   source: () => signatureContainer.value!.innerHTML, 
-  copiedDuring: 2000 
+  copiedDuring: 1000 
 })
 
 function copyToClipboard() {
@@ -57,13 +57,38 @@ function copyToClipboard() {
                     options.image.form === 'square' ? { width: `${options.image.size}px`, height: `${options.image.size}px` } : {},
                     options.image.form === 'circle' ? { width: `${options.image.size}px`, height: `${options.image.size}px`, borderRadius: `${options.image.size}px` } : {},
                     { objectFit: 'cover' },
+                    options.image.border ? {
+                      border: `${options.image.borderWidth}px ${options.image.borderStyle} ${options.image.borderColor}`,
+                    } : {},
+                    options.image.shadow ? {
+                      boxShadow: `0 ${options.image.shadowIntensity * 2}px ${options.image.shadowIntensity * 4}px -${options.image.shadowIntensity}px rgb(0 0 0 / ${options.image.shadowIntensity * 0.05})`
+                    } : {},
                   ]"
                 >
               </td>
-              <td style="padding: 6px; font-family: 'Inter', sans-serif;" :style="{ fontSize: `${options.size.subtitle}px` }">
+              <td
+                style="padding: 6px;"
+                :style="[
+                  { fontSize: `${options.size.subtitle}px` }
+                ]"
+                :class="[
+                  options.font.family === 'inter' ? 'font-inter' :
+                  options.font.family === 'sf' ? 'font-sf' :
+                  options.font.family === 'roboto' ? 'font-roboto' :
+                  'font-arial'
+                ]"
+              >
                 <table :style="{ fontSize: `${options.size.subtitle}px` }">
                   <tr v-if="data.fullName">
-                    <td :style="{ fontWeight: '600', fontSize: `${options.size.title}px`, color: options.color.autoTitle ? '' : options.color.title }">
+                    <td
+                      :style="[
+                        { 
+                          fontSize: `${options.size.title}px`,
+                          color: options.color.autoTitle ? '' : options.color.title,
+                          fontWeight: options.font.titleWeight
+                        }
+                      ]"
+                    >
                       {{ data.fullName }}
                     </td>
                   </tr>
@@ -116,14 +141,10 @@ function copyToClipboard() {
         size="lg"
         color="primary"
         variant="solid"
-        :loading="copied"
+        :icon="copied ? 'i-heroicons-clipboard-document-check' : 'i-heroicons-clipboard-document'"
+        :label="copied ? 'Copied!' : 'Copy Signature'"
         @click="copyToClipboard()"
-      >
-        <template #leading>
-          <UIcon :name="copied ? 'i-heroicons-clipboard-document-check' : 'i-heroicons-clipboard-document'" />
-        </template>
-        {{ copied ? 'Copied!' : 'Copy Signature' }}
-      </UButton>
+      />
     </div>
   </div>
 </template>
