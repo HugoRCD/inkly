@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@hrcd/eslint-config": "^3.0.3",
-    "@nuxt/scripts": "^0.12.1",
+    "@nuxt/scripts": "^0.12.2",
     "@nuxt/ui": "^3.3.6",
     "@vueuse/core": "^13.9.0",
     "@vueuse/nuxt": "^13.9.0",
