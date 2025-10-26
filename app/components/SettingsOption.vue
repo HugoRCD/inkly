@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Alignment, SignatureFormData, SignatureOptions, TabsItem } from '~~/types'
+import type { Alignment, SignatureFormData, SignatureOptions } from '~~/types'
 
 const options = defineModel<SignatureOptions>('options', { required: true })
 const data = defineModel<SignatureFormData>('data', { required: true })
@@ -13,37 +13,31 @@ function setImageForm(newImageForm: any) {
 }
 
 const items = [
-  { 
-    label: 'Information',
+  {
     icon: 'i-lucide-user',
     slot: 'information' as const
   },
-  { 
-    label: 'Socials',
+  {
     icon: 'i-lucide-share',
     slot: 'socials' as const
   },
-  { 
-    label: 'Image',
+  {
     icon: 'i-lucide-image',
     slot: 'image' as const
   },
-  { 
-    label: 'Size',
+  {
     icon: 'i-lucide-type',
     slot: 'size' as const
   },
-  { 
-    label: 'Color',
+  {
     icon: 'i-lucide-palette',
     slot: 'color' as const
   },
-  { 
-    label: 'Gap',
+  {
     icon: 'i-lucide-move-horizontal',
     slot: 'gap' as const
   }
-] satisfies TabsItem[]
+]
 
 const fields = [
   { name: 'fullName', label: 'Full Name', type: 'text', icon: 'i-lucide-user' },
@@ -71,9 +65,9 @@ const uid = Math.random().toString(36).substring(2, 15)
         <div class="mt-4">
           <div v-for="field in fields" :key="field.name" class="mb-4">
             <label :for="field.name" class="block text-sm font-medium mb-1">{{ field.label }}</label>
-            <UInput 
-              :id="`${field.name}-${uid}`" 
-              v-model="data[field.name]" 
+            <UInput
+              :id="`${field.name}-${uid}`"
+              v-model="data[field.name]"
               :type="field.type"
               :icon="field.icon"
             />
@@ -85,9 +79,9 @@ const uid = Math.random().toString(36).substring(2, 15)
         <div class="mt-4">
           <div v-for="social in data.socials" :key="social.title" class="mb-4">
             <label class="block text-sm font-medium mb-1">{{ social.title }}</label>
-            <UInput 
-              v-model="social.url" 
-              type="text" 
+            <UInput
+              v-model="social.url"
+              type="text"
               :icon="socialIcons[social.type] || 'i-lucide-link'"
               :placeholder="`${social.title} URL`"
               class="w-full"
@@ -100,15 +94,15 @@ const uid = Math.random().toString(36).substring(2, 15)
         <div class="mt-4 space-y-4">
           <div>
             <label class="block text-sm font-medium mb-2">Image URL</label>
-            <UInput 
-              id="image" 
-              v-model="data.image" 
-              type="text" 
+            <UInput
+              id="image"
+              v-model="data.image"
+              type="text"
               icon="i-lucide-link"
               placeholder="https://example.com/image.jpg"
             />
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium mb-2">Image Shape</label>
             <UButtonGroup>
@@ -125,7 +119,7 @@ const uid = Math.random().toString(36).substring(2, 15)
               </UButton>
             </UButtonGroup>
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium mb-2">Image Alignment</label>
             <UButtonGroup>
@@ -137,19 +131,19 @@ const uid = Math.random().toString(36).substring(2, 15)
                 :variant="alignment === options.image.align ? 'solid' : 'ghost'"
                 @click="setAlign(alignment as Alignment)"
               >
-                <UIcon 
+                <UIcon
                   :name="
-                    alignment === 'top' ? 'i-lucide-arrow-big-up-dash' : 
-                    alignment === 'center' ? 'i-lucide-align-center-vertical' : 
+                    alignment === 'top' ? 'i-lucide-arrow-big-up-dash' :
+                    alignment === 'center' ? 'i-lucide-align-center-vertical' :
                     'i-lucide-arrow-big-down-dash'
-                  " 
+                  "
                   class="size-4"
                 />
                 <span class="ml-1">{{ alignment }}</span>
               </UButton>
             </UButtonGroup>
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium mb-2">Image Size</label>
             <div class="flex items-center gap-2">
@@ -177,9 +171,9 @@ const uid = Math.random().toString(36).substring(2, 15)
           <div>
             <div class="flex items-center justify-between mb-2">
               <label class="text-sm font-medium">Image Border</label>
-              <UCheckbox 
-                v-model="options.image.border" 
-                label="Show border" 
+              <UCheckbox
+                v-model="options.image.border"
+                label="Show border"
                 :ui="{ wrapper: 'items-center gap-1.5' }"
               />
             </div>
@@ -200,7 +194,7 @@ const uid = Math.random().toString(36).substring(2, 15)
                   </UButton>
                 </UButtonGroup>
               </div>
-              
+
               <div>
                 <label class="block text-xs text-muted mb-1">Width</label>
                 <div class="flex items-center gap-2">
@@ -224,14 +218,14 @@ const uid = Math.random().toString(36).substring(2, 15)
                   </UInput>
                 </div>
               </div>
-              
+
               <div>
                 <label class="block text-xs text-muted mb-1">Color</label>
                 <UPopover>
                   <UButton color="neutral" variant="outline" size="sm" class="w-full">
                     <template #leading>
-                      <span 
-                        class="size-4 rounded-full border border-default" 
+                      <span
+                        class="size-4 rounded-full border border-default"
                         :style="{ backgroundColor: options.image.borderColor }"
                       />
                     </template>
@@ -251,9 +245,9 @@ const uid = Math.random().toString(36).substring(2, 15)
           <div>
             <div class="flex items-center justify-between mb-2">
               <label class="text-sm font-medium">Image Shadow</label>
-              <UCheckbox 
-                v-model="options.image.shadow" 
-                label="Add shadow" 
+              <UCheckbox
+                v-model="options.image.shadow"
+                label="Add shadow"
                 :ui="{ wrapper: 'items-center gap-1.5' }"
               />
             </div>
@@ -297,7 +291,7 @@ const uid = Math.random().toString(36).substring(2, 15)
               </UInput>
             </div>
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium mb-2">Subtitle Font Size</label>
             <div class="flex items-center gap-2">
@@ -321,7 +315,7 @@ const uid = Math.random().toString(36).substring(2, 15)
               </UInput>
             </div>
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium mb-2">Social Font Size</label>
             <div class="flex items-center gap-2">
@@ -383,8 +377,8 @@ const uid = Math.random().toString(36).substring(2, 15)
               <UPopover>
                 <UButton color="neutral" variant="outline" size="sm">
                   <template #leading>
-                    <span 
-                      class="size-4 rounded-full border border-default" 
+                    <span
+                      class="size-4 rounded-full border border-default"
                       :style="{ backgroundColor: options.color.title }"
                     />
                   </template>
@@ -398,10 +392,10 @@ const uid = Math.random().toString(36).substring(2, 15)
                 </template>
               </UPopover>
 
-              <UCheckbox 
-                v-model="options.color.autoTitle" 
-                label="Auto adapt" 
-                :ui="{ 
+              <UCheckbox
+                v-model="options.color.autoTitle"
+                label="Auto adapt"
+                :ui="{
                   wrapper: 'items-center gap-1.5',
                   label: 'text-xs text-muted'
                 }"
@@ -413,8 +407,8 @@ const uid = Math.random().toString(36).substring(2, 15)
             <UPopover>
               <UButton color="neutral" variant="outline" size="sm">
                 <template #leading>
-                  <span 
-                    class="size-4 rounded-full border border-default" 
+                  <span
+                    class="size-4 rounded-full border border-default"
                     :style="{ backgroundColor: options.color.subtitle }"
                   />
                 </template>
@@ -434,9 +428,9 @@ const uid = Math.random().toString(36).substring(2, 15)
               <UPopover>
                 <UButton color="neutral" variant="outline" size="sm">
                   <template #leading>
-                    <span 
-                      class="size-4 rounded-full border border-default" 
-                      :style="{ 
+                    <span
+                      class="size-4 rounded-full border border-default"
+                      :style="{
                         backgroundColor: options.color.background,
                         opacity: options.color.transparent ? 0.5 : 1
                       }"
@@ -452,10 +446,10 @@ const uid = Math.random().toString(36).substring(2, 15)
                 </template>
               </UPopover>
 
-              <UCheckbox 
-                v-model="options.color.transparent" 
-                label="Transparent" 
-                :ui="{ 
+              <UCheckbox
+                v-model="options.color.transparent"
+                label="Transparent"
+                :ui="{
                   wrapper: 'items-center gap-1.5',
                   label: 'text-xs text-muted'
                 }"
@@ -467,8 +461,8 @@ const uid = Math.random().toString(36).substring(2, 15)
             <UPopover>
               <UButton color="neutral" variant="outline" size="sm">
                 <template #leading>
-                  <span 
-                    class="size-4 rounded-full border border-default" 
+                  <span
+                    class="size-4 rounded-full border border-default"
                     :style="{ backgroundColor: options.color.social }"
                   />
                 </template>
@@ -501,7 +495,7 @@ const uid = Math.random().toString(36).substring(2, 15)
               </span>
             </div>
           </div>
-          
+
           <div>
             <label class="block text-sm font-medium mb-1">Social Links Gap</label>
             <div class="flex items-center gap-2">

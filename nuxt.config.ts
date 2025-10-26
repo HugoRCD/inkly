@@ -13,10 +13,6 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  future: {
-    compatibilityVersion: 4
-  },
-
   routeRules: {
     '/': { isr: true, prerender: true },
   },

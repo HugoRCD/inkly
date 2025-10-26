@@ -1,11 +1,4 @@
 <script setup lang="ts">
-useScriptPlausibleAnalytics({
-  domain: 'inkly.hrcd.fr',
-  scriptInput: {
-    src: 'https://analytics.hrcd.fr/js/script.js',
-  }
-})
-
 useSeoMeta({
   title: 'Inkly - Email Signature Generator',
   description: 'The most simple open-source email signature generator',

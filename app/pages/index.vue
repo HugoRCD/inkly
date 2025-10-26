@@ -30,7 +30,7 @@ const options = ref<SignatureOptions>({
     borderColor: '#000000',
     borderWidth: 1,
     shadow: false,
-    shadowIntensity: 2
+    shadowSize: 'md'
   },
   font: {
     family: 'inter',
@@ -41,7 +41,7 @@ const options = ref<SignatureOptions>({
 const data = ref<SignatureFormData>({
   image: 'https://avatars.githubusercontent.com/u/71938701?v=4',
   fullName: 'Hugo Richard',
-  jobTitle: 'Software Engineer at Nuxtlabs',
+  jobTitle: 'Software Engineer at Vercel',
   company: '',
   email: '',
   phone: '(+33) 6 00 00 00 00',
@@ -91,10 +91,10 @@ onMounted(() => {
       showSidebar.value = true
     }
   }
-  
+
   checkMobile()
   window.addEventListener('resize', checkMobile)
-  
+
   return () => {
     window.removeEventListener('resize', checkMobile)
   }
@@ -103,18 +103,18 @@ onMounted(() => {
 
 <template>
   <div class="flex h-full flex-col lg:flex-row">
-    <div 
-      v-if="showSidebar" 
+    <div
+      v-if="showSidebar"
       class="w-full lg:w-80 h-full overflow-y-auto border-r border-neutral-800 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 flex flex-col"
     >
       <div class="sticky top-0 z-10 px-4 py-3 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
         <h2 class="text-sm font-medium">
           Signature Settings
         </h2>
-        <UButton 
-          icon="i-lucide-x" 
-          color="neutral" 
-          variant="ghost" 
+        <UButton
+          icon="i-lucide-x"
+          color="neutral"
+          variant="ghost"
           class="lg:hidden"
           size="xs"
           @click="showSidebar = false"
@@ -126,13 +126,13 @@ onMounted(() => {
     </div>
 
     <div class="lg:hidden fixed bottom-4 right-4 z-20">
-      <UButton 
+      <UButton
         v-if="!showSidebar"
         icon="i-lucide-settings"
-        color="neutral" 
+        color="neutral"
         variant="solid"
         size="lg"
-        class="shadow-lg" 
+        class="shadow-lg"
         @click="showSidebar = true"
       />
     </div>
@@ -177,7 +177,7 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          
+
           <div class="p-5 flex-1 overflow-auto" :class="theme === 'light' ? 'bg-white text-black' : 'bg-neutral-900 text-white'">
             <div class="max-w-2xl space-y-6">
               <div class="whitespace-pre-line text-sm">
