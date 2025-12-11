@@ -31,7 +31,7 @@
     "@vueuse/nuxt": "^13.9.0",
     "automd": "^0.4.2",
     "eslint": "^9.39.1",
-    "nuxt": "^4.2.1"
+    "nuxt": "^4.2.2"
   },
   "publishConfig": {
     "access": "public"
